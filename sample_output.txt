@@ -1,0 +1,103 @@
+> source("unpartnered_partnered_3.R")
+[1] "# females = 1953, # males = 1953"
+eq values:
+[1]  3.110842e-07  5.600023e-07  5.409067e-07  3.083856e-07  3.216951e-07  4.335426e-07  6.191193e-07  3.426623e-07 -2.373462e-08
+             b1.intercept b1nodematch.educlevel_t.1 b1nodematch.educlevel_t.2 b1nodematch.educlevel_t.3 b1nodematch.educlevel_t.4 
+                     0.88                      1.05                      0.35                      0.08                      1.02 
+             b2.intercept b2nodematch.educlevel_t.1 b2nodematch.educlevel_t.2 b2nodematch.educlevel_t.3 b2nodematch.educlevel_t.4 
+                     0.88                      1.05                      0.35                      0.08                      1.02 
+             ExpUtil.b1.1              ExpUtil.b1.2              ExpUtil.b1.3              ExpUtil.b1.4              ExpUtil.b2.1 
+                     3.50                      2.77                      2.15                      3.98                      3.17 
+             ExpUtil.b2.2              ExpUtil.b2.3              ExpUtil.b2.4                   delta_w                   delta_m 
+                     2.54                      2.12                      4.49                      1.94                      1.96 
+start: 19 sec elapsed
+[1] "Coeff:"
+             b1.intercept b1nodematch.educlevel_t.1 b1nodematch.educlevel_t.2 b1nodematch.educlevel_t.3 b1nodematch.educlevel_t.4 
+               0.87645029                1.05225661                0.35469790                0.07839335                1.02208081 
+             b2.intercept b2nodematch.educlevel_t.1 b2nodematch.educlevel_t.2 b2nodematch.educlevel_t.3 b2nodematch.educlevel_t.4 
+               0.87645026                1.05225661                0.35469794                0.07839336                1.02208081 
+             ExpUtil.b1.1              ExpUtil.b1.2              ExpUtil.b1.3              ExpUtil.b1.4              ExpUtil.b2.1 
+               3.50371919                2.77078329                2.15111733                3.97680963                3.16728660 
+             ExpUtil.b2.2              ExpUtil.b2.3              ExpUtil.b2.4                   delta_w                   delta_m 
+               2.53637590                2.12062593                4.49250856                1.94096345                1.96414666 
+[1] "equality:"
+[1]  3.110842e-07  5.600023e-07  5.409067e-07  3.083856e-07  3.216951e-07  4.335426e-07  6.191193e-07  3.426623e-07 -2.373462e-08
+[1] "Likelihood ratio:"
+[1] -0.9559105
+[1] "Standard error:"
+ [1] 8.750782e-12 2.257071e-12 1.283134e-12 1.556255e-12 1.051181e-12 3.870519e-12 1.143910e-12 9.260809e-13 2.929274e-12 4.869666e-13
+[11] 1.827046e-01 8.951300e-02 6.251769e-02 1.283280e-01 1.555654e-01 7.426369e-02 6.562218e-02 1.544322e-01 5.240851e-02 5.241447e-02
+[1] "Standard error (centered:"
+ [1] 9.725512e-12 2.629449e-12 1.336677e-12 2.215187e-12 1.321692e-12 4.272119e-12 1.302576e-12 9.827138e-13 2.929280e-12 6.351075e-13
+[11] 2.078215e-01 1.192079e-01 8.773441e-02 1.704283e-01 1.795591e-01 1.035660e-01 8.936666e-02 1.995637e-01 5.430141e-02 5.430758e-02
+
+
+|                          | out.solution|
+|:-------------------------|------------:|
+|b1.intercept              |    0.8764503|
+|b1nodematch.educlevel_t.1 |    1.0522566|
+|b1nodematch.educlevel_t.2 |    0.3546979|
+|b1nodematch.educlevel_t.3 |    0.0783934|
+|b1nodematch.educlevel_t.4 |    1.0220808|
+|b2.intercept              |    0.8764503|
+|b2nodematch.educlevel_t.1 |    1.0522566|
+|b2nodematch.educlevel_t.2 |    0.3546979|
+|b2nodematch.educlevel_t.3 |    0.0783934|
+|b2nodematch.educlevel_t.4 |    1.0220808|
+|ExpUtil.b1.1              |    3.5037192|
+|ExpUtil.b1.2              |    2.7707833|
+|ExpUtil.b1.3              |    2.1511173|
+|ExpUtil.b1.4              |    3.9768096|
+|ExpUtil.b2.1              |    3.1672866|
+|ExpUtil.b2.2              |    2.5363759|
+|ExpUtil.b2.3              |    2.1206259|
+|ExpUtil.b2.4              |    4.4925086|
+|delta_w                   |    1.9409635|
+|delta_m                   |    1.9641467|
+[1] "estimated joint probabilities"
+            [,1]        [,2]        [,3]        [,4]        [,5]
+[1,] 0.048723355 0.021002180 0.022720090 0.008389361 0.002065866
+[2,] 0.019580634 0.140740508 0.074899355 0.027656481 0.006810363
+[3,] 0.031545863 0.111544481 0.141151453 0.044556656 0.010972003
+[4,] 0.013413418 0.047429125 0.051308673 0.146311253 0.004665336
+[5,] 0.002508151 0.008868687 0.009594117 0.003542614 0.000000000
+[1] "observed joint probabilities"
+            1           2           3           4           5
+1 0.048259089 0.032130056 0.015488991 0.002432156 0.003328213
+2 0.036098310 0.140168971 0.068356375 0.017281106 0.007296467
+3 0.024577573 0.105478751 0.142601126 0.059907834 0.009088582
+4 0.003584229 0.041090630 0.067844342 0.145673323 0.004800307
+  0.002880184 0.009792627 0.007488479 0.004352279 0.000000000
+start: 19 sec elapsed
+Warning messages:
+1: In read.dta13(data_file) : 
+  wpfinwgt_t:
+  Factor codes of type double or float detected - no labels assigned.
+  Set option nonint.factors to TRUE to assign labels anyway.
+
+2: In read.dta13(data_file) : 
+  tage_t:
+  Missing factor labels - no labels assigned.
+  Set option generate.factors=T to generate labels.
+3: In read.dta13(data_file) : 
+  s_wpfinwgt_t:
+  Factor codes of type double or float detected - no labels assigned.
+  Set option nonint.factors to TRUE to assign labels anyway.
+
+4: In read.dta13(data_file) : 
+  s_tage_t:
+  Missing factor labels - no labels assigned.
+  Set option generate.factors=T to generate labels.
+5: In read.dta13(data_file) : 
+  p_wpfinwgt_t:
+  Factor codes of type double or float detected - no labels assigned.
+  Set option nonint.factors to TRUE to assign labels anyway.
+
+6: In read.dta13(data_file) : 
+  p_tage_t:
+  Missing factor labels - no labels assigned.
+  Set option generate.factors=T to generate labels.
+7: In read.dta13(data_file) : 
+  marrcohabt_rev:
+  Factor codes of type double or float detected - no labels assigned.
+  Set option nonint.factors to TRUE to assign labels anyway.

@@ -248,7 +248,7 @@ sample = "INDIV" # sampling individuals
 ################## algorithm parameters #######################
 
 control = list("algorithm"="NLOPT_LD_SLSQP", "symmetric"=symmetric, "sampling_protocol"=sample,
-               "xtol_rel"=1.0e-8, "print_level"=2,"maxeval"=1000, 
+               "xtol_rel"=1.0e-8, "print_level"=0,"maxeval"=1000, 
                "ftol_rel"=1.0e-8,"check_derivatives"=FALSE,"ftol_abs"=1.0e-6,"hessian"=TRUE) 
 
 # starting parameter for estimation
@@ -272,7 +272,7 @@ mu = processed_data$mu
 
 # Compute MLE based on an observed matching
 out <- fitrpm_R_CP(ff, mu, Xdata, Zdata, theta_0, choices=max_choices, control=control)
-save(out, file="edu_race_age_nodematch.RData")
+# save(out, file="edu_race_age_nodematch.RData")
 toc(log=TRUE, quiet=FALSE)
 
 print("Coeff:")
@@ -288,7 +288,7 @@ print(sqrt(out$covar2))
 
 # output table
 dff = data.frame(out$solution)
-kable(dff)
+print(kable(dff))
 
   
 # check the reconstructed joint density for the matching generated from 
