@@ -1,9 +1,12 @@
-# setwd("C:\\UCLA\\thesis_ideas\\PhD_thesis\\many_to_many_application")
+# setwd("C:\\UCLA\\research_projects\\many_to_many_dissertation")
 # source("unpartnered_partnered_3.R")
+
+set.seed(1234)
 
 library(knitr)
 library(ggplot2)
 # library(entropy)
+library(latex2exp)
 
 ###################### files and libraries for the data ######################
 
@@ -124,7 +127,7 @@ process_data = function(data, complete_cases_only, wave_num, max_choices) {
   
   # create the adjacency matrix
   n_pairs = nrow(Xdata)
-  
+
   # observed matching (sparse matrix)
   mu = Diagonal(n_pairs) * females$paired
   
@@ -171,6 +174,57 @@ data$tage_t <- cut(data$tage_t, breaks = 4, labels=FALSE)
 ###################### more data processing ###################
 
 processed_data = process_data(data, complete_cases_only, wave_num, max_choices)
+
+########## delete some type 1 marriages (too many). This seems to cause the Hessian to be unstable. ########
+
+# age_pairs_df = data.frame(pair_id = processed_data$females[,"pair_id"], female_age = processed_data$females[,"tage_t"],
+#                           male_age = processed_data$males[,"tage_t"], type = rep(NA, nrow(processed_data$females)))
+# uniq_age_pairs = unique(age_pairs_df[,c("female_age", "male_age")])
+# uniq_age_pairs = uniq_age_pairs[order(uniq_age_pairs$female_age, uniq_age_pairs$male_age),]
+# uniq_age_pairs$type = 1:nrow(uniq_age_pairs)
+# 
+# for(ii in 1:nrow(uniq_age_pairs)) {
+#   idx = which(age_pairs_df$female_age==uniq_age_pairs$female_age[ii] & age_pairs_df$male_age==uniq_age_pairs$male_age[ii])
+#   age_pairs_df[idx,"type"] = ii
+# }
+# age_pairs_df$female_age = as.factor(age_pairs_df$female_age)
+# age_pairs_df$male_age = as.factor(age_pairs_df$male_age)
+# age_pairs_df$type = as.factor(age_pairs_df$type)
+# 
+# count_vec = rep(0,nrow(uniq_age_pairs))
+# for(ii in 1:nrow(uniq_age_pairs)) {
+#   count_vec[ii] = sum(as.numeric(age_pairs_df$type)==ii)
+# }
+# t1_idx = which(age_pairs_df$type==1)
+# sample_t1 = sample(t1_idx, 300, replace=F)
+# drop_t1_idx = t1_idx[!(t1_idx %in% sample_t1)]
+# 
+# age_pairs_df_sub = age_pairs_df[-drop_t1_idx,]
+# sum(age_pairs_df_sub$type==1) # should be 300
+# 
+# age_pairs_df_sub$female_age = as.factor(age_pairs_df_sub$female_age)
+# age_pairs_df_sub$male_age = as.factor(age_pairs_df_sub$male_age)
+# age_pairs_df_sub$type = as.factor(age_pairs_df_sub$type)
+# 
+# processed_data_sub = processed_data
+# processed_data_sub$mu = processed_data_sub$mu[-drop_t1_idx,-drop_t1_idx]
+# processed_data_sub$Xdata = processed_data_sub$Xdata[-drop_t1_idx,]
+# processed_data_sub$Zdata = processed_data_sub$Zdata[-drop_t1_idx,]
+# processed_data_sub$females = processed_data_sub$females[-drop_t1_idx,]
+# processed_data_sub$males = processed_data_sub$males[-drop_t1_idx,]
+# 
+# age_pairs_df_sub = data.frame(pair_id = processed_data_sub$females[,"pair_id"], female_age = processed_data_sub$females[,"tage_t"],
+#                               male_age = processed_data_sub$males[,"tage_t"], type = rep(NA, nrow(processed_data_sub$females)))
+# 
+# length(which(age_pairs_df_sub$female_age == 1 & age_pairs_df_sub$male_age == 1)) # should be 300
+# 
+# Xdata = processed_data_sub$Xdata
+# Zdata = processed_data_sub$Zdata
+# mu = processed_data_sub$mu
+
+load("processed_data_sub.Rdata")
+processed_data = processed_data_sub
+
 print(paste0("# females = ", nrow(processed_data$females), ", # males = ", nrow(processed_data$males)))
 
 ################# source the algo files and load the libraries ################
@@ -195,8 +249,19 @@ source("asymptotic_var.R")
 # specify the formula for utilities
 # example: ff = ~ b1cov("f1") + b2cov("f1") + b1absdiff("f1",1) + b2absdiff("f1",1)
 
-# takes a few seconds
-# ff = ~ b1nodematch("educlevel_t") + b2nodematch("educlevel_t")
+
+# used in dissertation
+# ff = ~ b1nodematch("educlevel_t") + b2nodematch("educlevel_t") # used in dissertation
+
+# ff = ~ b1nodematch("race_t") + b2nodematch("race_t")
+
+ff = ~ b1nodematch("tage_t") + b2nodematch("tage_t")
+# 
+# ff = ~ b1homophily("tage_t") + b2homophily("tage_t") +
+#   b1greaterthan("tage_t") + b2greaterthan("tage_t") +
+#   b1smallerthan("tage_t") + b2smallerthan("tage_t")
+
+
 
 # takes > 1 min
 # ff = ~ b1homophily("educlevel_t") + b2homophily("educlevel_t") + b1homophily("race_t") + b2homophily("race_t")
@@ -206,8 +271,6 @@ source("asymptotic_var.R")
 
 # ff = ~ b1nodematch("educlevel_t") + b2nodematch("educlevel_t") +
 #   b1nodematch("tage_t") + b2nodematch("tage_t")
-
-ff = ~ b1nodematch("educlevel_t") + b2nodematch("educlevel_t")
 
 # takes too long (don't run this!)
 # ff = ~ b1nodematch("educlevel_t") + b2nodematch("educlevel_t") +
@@ -255,7 +318,6 @@ control = list("algorithm"="NLOPT_LD_SLSQP", "symmetric"=symmetric, "sampling_pr
 # theta_0 = c(rep(0,numBeta), rep(1,numGamma))
 theta_0 = NULL
 
-
 ################################################################
 ################# run algorithm ################################
 
@@ -264,18 +326,50 @@ theta_0 = NULL
 tic.clearlog()
 tic("start")
 
-############# fit data #####################
+############## bootstrap ###################
 
-Xdata = processed_data$Xdata
-Zdata = processed_data$Zdata
-mu = processed_data$mu
+library(foreach)
+library(doSNOW)
 
-# Compute MLE based on an observed matching
-out <- fitrpm_R_CP(ff, mu, Xdata, Zdata, theta_0, choices=max_choices, control=control)
-# save(out, file="edu_race_age_nodematch.RData")
+# parallel
+cl<-makeCluster(4) #change to your number of CPU cores
+# cl <- makeCluster(16, type="MPI")
+registerDoSNOW(cl)
+
+# out$solution, out$eq, w_ave_choices, m_ave_choices, out$null_solution, out$chisq_stat, out$p.value, out$covar2
+# bootstrap_result <- matrix(0,ncol=(numBeta+2+numGamma)+(numGamma+1)+2+(numGamma+2)+2+(numBeta+numGamma+2),nrow=B) 
+
+B = 1000
+
+bootstrap_result <-
+ foreach (b=1:B, .combine = 'rbind', .packages=c('nloptr','abind', 'Matrix', 'numDeriv', 'MASS')) %dopar% {
+# for (b in 1:B) {    
+    keep_idx = sample(1:nrow(processed_data$mu), nrow(processed_data$mu), replace=T)
+    
+    ############# fit data #####################
+    
+    Xdata = processed_data$Xdata[keep_idx,]
+    Zdata = processed_data$Zdata[keep_idx,]
+    mu = Diagonal(nrow(processed_data$mu)) * diag(processed_data$mu)[keep_idx]
+    
+    # Compute MLE based on an observed matching
+    out <- fitrpm_R_CP(ff, mu, Xdata, Zdata, theta_0, choices=max_choices, control=control)
+    # save(out, file="edu_race_age_nodematch.RData")
+    # c(out$solution, out$eq, w_ave_choices, m_ave_choices, out$null_solution, out$chisq_stat, out$p.value, out$covar2)
+    c(out$solution, out$eq, out$null_solution, out$chisq_stat, out$p.value, out$covar2)
+    
+  } # end of bootstrap loop
 toc(log=TRUE, quiet=FALSE)
 
-print("Coeff:")
+stopCluster(cl)
+
+# original data set
+Xdata = processed_data_sub$Xdata
+Zdata = processed_data_sub$Zdata
+mu = processed_data_sub$mu
+out <- fitrpm_R_CP(ff, mu, Xdata, Zdata, theta_0, choices=max_choices, control=control)
+
+print("coeff:")
 print(out$solution)
 print("equality:")
 print(out$eq)
@@ -290,11 +384,18 @@ print(sqrt(out$covar2))
 dff = data.frame(out$solution)
 print(kable(dff))
 
-  
-# check the reconstructed joint density for the matching generated from 
-# the estimated parameters
+# compute variance and standard error of the estimates
+diff_est = bootstrap_result[,1:length(out$solution)] - matrix(rep(out$solution, times=B), nrow=B, byrow=T)
+asympt_var = matrix(0, nrow=length(out$solution), ncol=length(out$solution))
+for (b in 1:B) {
+  asympt_var = asympt_var + outer(diff_est[b,], diff_est[b,])
+}
+asympt_var = asympt_var/B
+se = sqrt(diag(asympt_var))
 
-# best_theta = find_best_theta(beta_med, beta_sim, numBeta, numGamma)
+save.image(file=paste0("SE_B", B, ".RData"))
+print("bootstrap standard error:")
+print(se)
 
 # compare estimated joint probabilities with truth
 pmfj = check_CP_latent(ff, out$solution, mu, Xdata, Zdata, symmetric, max_choices)

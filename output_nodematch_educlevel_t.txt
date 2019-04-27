@@ -1,0 +1,81 @@
+> source("unpartnered_partnered_3.R")
+[1] "# females = 1435, # males = 1435"
+start: 9996.47 sec elapsed
+eq values:
+[1]  1.726263e-06  2.520749e-06  3.141353e-06  1.706349e-06  1.699519e-06  2.052452e-06  3.567537e-06  1.788420e-06 -1.246167e-07
+             b1.intercept b1nodematch.educlevel_t.1 b1nodematch.educlevel_t.2 b1nodematch.educlevel_t.3 b1nodematch.educlevel_t.4 
+                     0.93                      0.98                      0.31                      0.04                      0.92 
+             b2.intercept b2nodematch.educlevel_t.1 b2nodematch.educlevel_t.2 b2nodematch.educlevel_t.3 b2nodematch.educlevel_t.4 
+                     0.93                      0.98                      0.31                      0.04                      0.92 
+             ExpUtil.b1.1              ExpUtil.b1.2              ExpUtil.b1.3              ExpUtil.b1.4              ExpUtil.b2.1 
+                     3.50                      2.83                      2.24                      3.94                      3.21 
+             ExpUtil.b2.2              ExpUtil.b2.3              ExpUtil.b2.4                   delta_w                   delta_m 
+                     2.62                      2.20                      4.40                      1.93                      1.95 
+[1] "coeff:"
+             b1.intercept b1nodematch.educlevel_t.1 b1nodematch.educlevel_t.2 b1nodematch.educlevel_t.3 b1nodematch.educlevel_t.4 
+               0.92568588                0.98169295                0.30563949                0.03958555                0.91819881 
+             b2.intercept b2nodematch.educlevel_t.1 b2nodematch.educlevel_t.2 b2nodematch.educlevel_t.3 b2nodematch.educlevel_t.4 
+               0.92568589                0.98169295                0.30563949                0.03958553                0.91819882 
+             ExpUtil.b1.1              ExpUtil.b1.2              ExpUtil.b1.3              ExpUtil.b1.4              ExpUtil.b2.1 
+               3.49618012                2.82816409                2.23698284                3.93502244                3.21411948 
+             ExpUtil.b2.2              ExpUtil.b2.3              ExpUtil.b2.4                   delta_w                   delta_m 
+               2.62391392                2.20048952                4.40185546                1.92976317                1.95016948 
+[1] "equality:"
+[1]  1.726263e-06  2.520749e-06  3.141353e-06  1.706349e-06  1.699519e-06  2.052452e-06  3.567537e-06  1.788420e-06 -1.246167e-07
+[1] "Likelihood ratio:"
+[1] -0.9645114
+[1] "Standard error:"
+ [1] 1.107842e-12 1.071753e-12 1.187695e-12 5.151581e-12 6.335620e-14 5.291956e-12 6.996829e-13 1.363296e-12 7.032135e-12 1.159647e-12 2.161468e-01
+[12] 1.064548e-01 7.634499e-02 1.458990e-01 1.868968e-01 8.931706e-02 7.967201e-02 1.748325e-01 6.148923e-02 6.151160e-02
+[1] "Standard error (centered:"
+ [1] 1.255402e-12 1.288915e-12 1.210009e-12 6.195030e-12 8.181070e-14 8.127523e-12 7.595279e-13 1.419621e-12 7.044976e-12 1.271560e-12 2.449873e-01
+[12] 1.418346e-01 1.067495e-01 1.950888e-01 2.149410e-01 1.247378e-01 1.083188e-01 2.268550e-01 6.368361e-02 6.370678e-02
+
+
+|                          | out.solution|
+|:-------------------------|------------:|
+|b1.intercept              |    0.9256859|
+|b1nodematch.educlevel_t.1 |    0.9816929|
+|b1nodematch.educlevel_t.2 |    0.3056395|
+|b1nodematch.educlevel_t.3 |    0.0395855|
+|b1nodematch.educlevel_t.4 |    0.9181988|
+|b2.intercept              |    0.9256859|
+|b2nodematch.educlevel_t.1 |    0.9816929|
+|b2nodematch.educlevel_t.2 |    0.3056395|
+|b2nodematch.educlevel_t.3 |    0.0395855|
+|b2nodematch.educlevel_t.4 |    0.9181988|
+|ExpUtil.b1.1              |    3.4961801|
+|ExpUtil.b1.2              |    2.8281641|
+|ExpUtil.b1.3              |    2.2369828|
+|ExpUtil.b1.4              |    3.9350224|
+|ExpUtil.b2.1              |    3.2141195|
+|ExpUtil.b2.2              |    2.6239139|
+|ExpUtil.b2.3              |    2.2004895|
+|ExpUtil.b2.4              |    4.4018555|
+|delta_w                   |    1.9297632|
+|delta_m                   |    1.9501695|
+[1] "bootstrap standard error:"
+             b1.intercept b1nodematch.educlevel_t.1 b1nodematch.educlevel_t.2 b1nodematch.educlevel_t.3 b1nodematch.educlevel_t.4 
+               0.33410388                0.10939831                0.06535958                0.06651355                0.08094054 
+             b2.intercept b2nodematch.educlevel_t.1 b2nodematch.educlevel_t.2 b2nodematch.educlevel_t.3 b2nodematch.educlevel_t.4 
+               0.33410403                0.10939827                0.06535954                0.06651355                0.08094042 
+             ExpUtil.b1.1              ExpUtil.b1.2              ExpUtil.b1.3              ExpUtil.b1.4              ExpUtil.b2.1 
+               0.85759900                0.67832210                0.53727853                0.94053217                0.79204887 
+             ExpUtil.b2.2              ExpUtil.b2.3              ExpUtil.b2.4                   delta_w                   delta_m 
+               0.63200302                0.53849894                1.07013358                0.29563449                0.29671534 
+[1] "estimated joint probabilities"
+            [,1]        [,2]        [,3]        [,4]        [,5]
+[1,] 0.043160593 0.021875983 0.023289187 0.009359904 0.002028250
+[2,] 0.020176963 0.134245181 0.077555103 0.031169327 0.006754257
+[3,] 0.031401046 0.113373600 0.130641832 0.048508265 0.010511529
+[4,] 0.014703453 0.053086877 0.056516328 0.142504421 0.004921995
+[5,] 0.002421834 0.008744041 0.009308912 0.003741244 0.000000000
+[1] "observed joint probabilities"
+            1           2           3           4           5
+1 0.043031359 0.033275261 0.015679443 0.003310105 0.003222997
+2 0.036759582 0.133972125 0.070383275 0.022125436 0.006707317
+3 0.025435540 0.106794425 0.131707317 0.063066202 0.008972125
+4 0.004878049 0.046167247 0.073344948 0.141637631 0.005313589
+  0.002090592 0.009930314 0.007752613 0.004442509 0.000000000
+start: 9996.47 sec elapsed
+There were 27 warnings (use warnings() to see them)

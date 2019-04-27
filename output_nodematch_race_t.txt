@@ -1,0 +1,109 @@
+> source("unpartnered_partnered_3.R")
+[1] "# females = 1435, # males = 1435"
+start: 11131.06 sec elapsed
+eq values:
+[1]  0.035891930  0.024645568  0.001621631  0.019912477  0.036032295  0.013160054  0.001490073  0.103775299 -0.000434145
+        b1.intercept b1nodematch.race_t.1 b1nodematch.race_t.2 b1nodematch.race_t.3 b1nodematch.race_t.4         b2.intercept b2nodematch.race_t.1 
+                0.22                 1.45                 2.20                 0.93                 3.04                 0.22                 1.45 
+b2nodematch.race_t.2 b2nodematch.race_t.3 b2nodematch.race_t.4         ExpUtil.b1.1         ExpUtil.b1.2         ExpUtil.b1.3         ExpUtil.b1.4 
+                2.20                 0.93                 3.04                 1.63                 4.31                 2.28                 1.82 
+        ExpUtil.b2.1         ExpUtil.b2.2         ExpUtil.b2.3         ExpUtil.b2.4              delta_w              delta_m 
+                2.34                 3.13                 3.36                10.76                 2.16                 1.80 
+[1] "coeff:"
+        b1.intercept b1nodematch.race_t.1 b1nodematch.race_t.2 b1nodematch.race_t.3 b1nodematch.race_t.4         b2.intercept b2nodematch.race_t.1 
+           0.2189337            1.4454861            2.1997403            0.9306674            3.0352099            0.2189332            1.4454862 
+b2nodematch.race_t.2 b2nodematch.race_t.3 b2nodematch.race_t.4         ExpUtil.b1.1         ExpUtil.b1.2         ExpUtil.b1.3         ExpUtil.b1.4 
+           2.1997403            0.9306677            3.0352099            1.6327828            4.3057143            2.2769834            1.8190976 
+        ExpUtil.b2.1         ExpUtil.b2.2         ExpUtil.b2.3         ExpUtil.b2.4              delta_w              delta_m 
+           2.3389705            3.1253335            3.3647929           10.7619566            2.1634021            1.8038560 
+[1] "equality:"
+[1]  0.035891930  0.024645568  0.001621631  0.019912477  0.036032295  0.013160054  0.001490073  0.103775299 -0.000434145
+[1] "Likelihood ratio:"
+[1] -0.8194128
+[1] "Standard error:"
+ [1] 1.460034e-10 5.641592e-13 3.394864e-13 2.907462e-12 1.706525e-11 1.461841e-11 3.261038e-13 1.479170e-12 1.954736e-12 5.019008e-14 9.815118e-02
+[12] 2.802023e-01 5.095599e-02 2.147259e-01 1.409864e-01 1.939089e-01 7.556041e-02 1.384660e+00 6.147021e-02 6.144278e-02
+[1] "Standard error (centered:"
+ [1] 1.500420e-10 6.355451e-13 3.971306e-13 2.920896e-12 1.761145e-11 1.729344e-11 3.553463e-13 1.670237e-12 2.026425e-12 5.359980e-14 1.123163e-01
+[12] 3.136877e-01 9.102765e-02 2.231202e-01 1.612304e-01 2.198689e-01 1.345949e-01 1.428343e+00 6.366391e-02 6.363550e-02
+
+
+|                     | out.solution|
+|:--------------------|------------:|
+|b1.intercept         |    0.2189337|
+|b1nodematch.race_t.1 |    1.4454861|
+|b1nodematch.race_t.2 |    2.1997403|
+|b1nodematch.race_t.3 |    0.9306674|
+|b1nodematch.race_t.4 |    3.0352099|
+|b2.intercept         |    0.2189332|
+|b2nodematch.race_t.1 |    1.4454862|
+|b2nodematch.race_t.2 |    2.1997403|
+|b2nodematch.race_t.3 |    0.9306677|
+|b2nodematch.race_t.4 |    3.0352099|
+|ExpUtil.b1.1         |    1.6327828|
+|ExpUtil.b1.2         |    4.3057143|
+|ExpUtil.b1.3         |    2.2769834|
+|ExpUtil.b1.4         |    1.8190976|
+|ExpUtil.b2.1         |    2.3389705|
+|ExpUtil.b2.2         |    3.1253335|
+|ExpUtil.b2.3         |    3.3647929|
+|ExpUtil.b2.4         |   10.7619566|
+|delta_w              |    2.1634021|
+|delta_m              |    1.8038560|
+[1] "bootstrap standard error:"
+        b1.intercept b1nodematch.race_t.1 b1nodematch.race_t.2 b1nodematch.race_t.3 b1nodematch.race_t.4         b2.intercept b2nodematch.race_t.1 
+           0.2214668            0.1397853            0.5552324            0.1414055            0.7176573            0.2214668            0.1397853 
+b2nodematch.race_t.2 b2nodematch.race_t.3 b2nodematch.race_t.4         ExpUtil.b1.1         ExpUtil.b1.2         ExpUtil.b1.3         ExpUtil.b1.4 
+           0.5552324            0.1414056            0.7176573            0.5656712            4.6096195            0.7405291            0.8125459 
+        ExpUtil.b2.1         ExpUtil.b2.2         ExpUtil.b2.3         ExpUtil.b2.4              delta_w              delta_m 
+           0.6409348            1.3692134            0.5809023            7.2496671            0.4164982            0.2324708 
+[1] "estimated joint probabilities"
+            [,1]         [,2]        [,3]         [,4]         [,5]
+[1,] 0.080279156 0.0030758969 0.021523711 2.029918e-04 0.0036890919
+[2,] 0.001379111 0.0774767834 0.006659580 6.280702e-05 0.0011414296
+[3,] 0.022372968 0.0154392387 0.694926403 1.018902e-03 0.0185171255
+[4,] 0.001050752 0.0007251079 0.005073972 2.071377e-02 0.0008696617
+[5,] 0.003689509 0.0025460731 0.017816248 1.680264e-04 0.0000000000
+[1] "observed joint probabilities"
+             1            2            3            4           5
+1 0.0808362369 0.0027874564 0.0231707317 0.0020905923 0.001655052
+2 0.0027874564 0.0820557491 0.0006968641 0.0000000000 0.001132404
+3 0.0228222997 0.0132404181 0.6925087108 0.0013937282 0.020383275
+4 0.0006968641 0.0006968641 0.0081881533 0.0175958188 0.001045296
+  0.0025261324 0.0014808362 0.0195993031 0.0006097561 0.000000000
+start: 11131.06 sec elapsed
+Warning messages:
+1: In read.dta13(data_file) : 
+  wpfinwgt_t:
+  Factor codes of type double or float detected - no labels assigned.
+  Set option nonint.factors to TRUE to assign labels anyway.
+
+2: In read.dta13(data_file) : 
+  tage_t:
+  Missing factor labels - no labels assigned.
+  Set option generate.factors=T to generate labels.
+3: In read.dta13(data_file) : 
+  s_wpfinwgt_t:
+  Factor codes of type double or float detected - no labels assigned.
+  Set option nonint.factors to TRUE to assign labels anyway.
+
+4: In read.dta13(data_file) : 
+  s_tage_t:
+  Missing factor labels - no labels assigned.
+  Set option generate.factors=T to generate labels.
+5: In read.dta13(data_file) : 
+  p_wpfinwgt_t:
+  Factor codes of type double or float detected - no labels assigned.
+  Set option nonint.factors to TRUE to assign labels anyway.
+
+6: In read.dta13(data_file) : 
+  p_tage_t:
+  Missing factor labels - no labels assigned.
+  Set option generate.factors=T to generate labels.
+7: In read.dta13(data_file) : 
+  marrcohabt_rev:
+  Factor codes of type double or float detected - no labels assigned.
+  Set option nonint.factors to TRUE to assign labels anyway.
+
+8: In chisq.test(x = matrix(matching_freq$pmfj_est * n, nrow = 1)[-(num_Zu +  :
+  Chi-squared approximation may be incorrect
