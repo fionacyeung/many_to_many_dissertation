@@ -49,9 +49,9 @@ process_data = function(data, complete_cases_only, wave_num, max_choices) {
 
   # separate the couples from the singles
   idx = which(!is.na(data$allrespartid_w))
-  paired = data[idx,c("pid", "spanel_all", "wavetime", "wpfinwgt_t", "tage_t", "female_t", "race_t", "educlevel_t", "allrespartid_w", "newrelunpar" )]
+  paired = data[idx,c("pid", "epppnum", "spanel_all", "wavetime", "wpfinwgt_t", "tage_t", "female_t", "race_t", "educlevel_t", "allrespartid_w", "newrelunpar" )]
   paired$pair_id = rep(1:(nrow(paired)/2), each=2)
-  single = data[-idx,c("pid", "spanel_all", "wavetime", "wpfinwgt_t", "tage_t", "female_t", "race_t", "educlevel_t", "allrespartid_w", "newrelunpar" )]
+  single = data[-idx,c("pid", "epppnum", "spanel_all", "wavetime", "wpfinwgt_t", "tage_t", "female_t", "race_t", "educlevel_t", "allrespartid_w", "newrelunpar" )]
   single$pair_id = rep(0,nrow(single))
   
   # order the partners at the same index
@@ -112,6 +112,14 @@ process_data = function(data, complete_cases_only, wave_num, max_choices) {
     nrow(females) == nrow(males) # 1953 females and 1953 males left
   }
   
+  # get the weight for the pair (if both partners are from the same wave, just use the one with lower epppnum)
+  pair_w_idx = apply(cbind(females$epppnum, males$epppnum), 1, which.min)
+  pair_w = cbind(females$wpfinwgt_t, males$wpfinwgt_t)
+  pair_w = pair_w[cbind(1:length(pair_w_idx),pair_w_idx)]
+  pair_min_epppnum = apply(cbind(females$epppnum, males$epppnum), 1, min)
+  # sanity check
+  all(pair_min_epppnum < 200)
+  
   Xdata = females
   Zdata = males
   
@@ -135,7 +143,8 @@ process_data = function(data, complete_cases_only, wave_num, max_choices) {
   Zdata = as.matrix(Zdata)
   
   return(list(Xdata=Xdata, Zdata=Zdata, mu=mu, 
-              females=females, males=males))
+              females=females, males=males, 
+              X_w=females$wpfinwgt_t, Z_w=males$wpfinwgt_t , pair_w=pair_w))
 }
 
 
@@ -212,6 +221,9 @@ processed_data = process_data(data, complete_cases_only, wave_num, max_choices)
 # processed_data_sub$Zdata = processed_data_sub$Zdata[-drop_t1_idx,]
 # processed_data_sub$females = processed_data_sub$females[-drop_t1_idx,]
 # processed_data_sub$males = processed_data_sub$males[-drop_t1_idx,]
+# processed_data_sub$X_w = processed_data_sub$X_w[-drop_t1_idx]
+# processed_data_sub$Z_w = processed_data_sub$Z_w[-drop_t1_idx]
+# processed_data_sub$pair_w = processed_data_sub$pair_w[-drop_t1_idx]
 # 
 # age_pairs_df_sub = data.frame(pair_id = processed_data_sub$females[,"pair_id"], female_age = processed_data_sub$females[,"tage_t"],
 #                               male_age = processed_data_sub$males[,"tage_t"], type = rep(NA, nrow(processed_data_sub$females)))
@@ -221,8 +233,12 @@ processed_data = process_data(data, complete_cases_only, wave_num, max_choices)
 # Xdata = processed_data_sub$Xdata
 # Zdata = processed_data_sub$Zdata
 # mu = processed_data_sub$mu
+# 
+# save(processed_data_sub, file="processed_data_sub_weight.RData")
 
-load("processed_data_sub.Rdata")
+# load("processed_data_sub.Rdata")
+load("processed_data_sub_weight.RData")
+
 processed_data = processed_data_sub
 
 print(paste0("# females = ", nrow(processed_data$females), ", # males = ", nrow(processed_data$males)))
@@ -251,12 +267,12 @@ source("asymptotic_var.R")
 
 
 # used in dissertation
-# ff = ~ b1nodematch("educlevel_t") + b2nodematch("educlevel_t") # used in dissertation
+ff = ~ b1nodematch("educlevel_t") + b2nodematch("educlevel_t") # used in dissertation
 
 # ff = ~ b1nodematch("race_t") + b2nodematch("race_t")
 
-ff = ~ b1nodematch("tage_t") + b2nodematch("tage_t")
-# 
+# ff = ~ b1nodematch("tage_t") + b2nodematch("tage_t")
+
 # ff = ~ b1homophily("tage_t") + b2homophily("tage_t") +
 #   b1greaterthan("tage_t") + b2greaterthan("tage_t") +
 #   b1smallerthan("tage_t") + b2smallerthan("tage_t")
@@ -340,20 +356,25 @@ registerDoSNOW(cl)
 # bootstrap_result <- matrix(0,ncol=(numBeta+2+numGamma)+(numGamma+1)+2+(numGamma+2)+2+(numBeta+numGamma+2),nrow=B) 
 
 B = 1000
+# B = 3
 
 bootstrap_result <-
- foreach (b=1:B, .combine = 'rbind', .packages=c('nloptr','abind', 'Matrix', 'numDeriv', 'MASS')) %dopar% {
+ foreach (b=1:B, .combine = 'rbind', .packages=c('nloptr','abind', 'Matrix', 'numDeriv', 'MASS', 'questionr')) %dopar% {
 # for (b in 1:B) {    
+   
     keep_idx = sample(1:nrow(processed_data$mu), nrow(processed_data$mu), replace=T)
     
     ############# fit data #####################
     
     Xdata = processed_data$Xdata[keep_idx,]
     Zdata = processed_data$Zdata[keep_idx,]
+    X_w = processed_data$X_w[keep_idx]
+    Z_w = processed_data$Z_w[keep_idx]
+    pair_w = processed_data$pair_w[keep_idx]
     mu = Diagonal(nrow(processed_data$mu)) * diag(processed_data$mu)[keep_idx]
     
     # Compute MLE based on an observed matching
-    out <- fitrpm_R_CP(ff, mu, Xdata, Zdata, theta_0, choices=max_choices, control=control)
+    out <- fitrpm_R_CP(ff, mu, Xdata, Zdata, X_w, Z_w, pair_w, theta_0, choices=max_choices, control=control)
     # save(out, file="edu_race_age_nodematch.RData")
     # c(out$solution, out$eq, w_ave_choices, m_ave_choices, out$null_solution, out$chisq_stat, out$p.value, out$covar2)
     c(out$solution, out$eq, out$null_solution, out$chisq_stat, out$p.value, out$covar2)
@@ -367,7 +388,11 @@ stopCluster(cl)
 Xdata = processed_data_sub$Xdata
 Zdata = processed_data_sub$Zdata
 mu = processed_data_sub$mu
-out <- fitrpm_R_CP(ff, mu, Xdata, Zdata, theta_0, choices=max_choices, control=control)
+X_w = processed_data_sub$X_w
+Z_w  = processed_data_sub$Z_w
+pair_w = processed_data_sub$pair_w
+
+out <- fitrpm_R_CP(ff, mu, Xdata, Zdata, X_w, Z_w, pair_w, theta_0, choices=max_choices, control=control)
 
 print("coeff:")
 print(out$solution)

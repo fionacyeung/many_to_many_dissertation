@@ -53,8 +53,9 @@ library(abind)
 library(nloptr)
 library(numDeriv)
 library(MASS)
+library(questionr)
 
-fitrpm_R_CP <- function(formula, mu, Xdata, Zdata, theta_0=NULL, choices, control){
+fitrpm_R_CP <- function(formula, mu, Xdata, Zdata, X_w, Z_w, pair_w, theta_0=NULL, choices, control){
 
     symmetric = control[["symmetric"]]
     sampling = control[["sampling_protocol"]]
@@ -111,19 +112,23 @@ fitrpm_R_CP <- function(formula, mu, Xdata, Zdata, theta_0=NULL, choices, contro
         Ztype[apply(Zdata[,model_vars], 1, function(x) identical(x, Zu[i,]))] <- i
     }
     
-    # order the data by pair
-    Xtype_paired = Xtype[unlist(apply(mu, 2, function(x) which(x>0)))]
-    ##### modified to work for many-to-many
-    # Ztype_paired = Ztype[as.logical(colSums(mu))]
-    Ztype_paired = Ztype[unlist(apply(mu, 1, function(x) which(x>0)))] 
+    # # order the data by pair (not used)
+    # Xtype_paired = Xtype[unlist(apply(mu, 2, function(x) which(x>0)))]
+    # ##### modified to work for many-to-many
+    # # Ztype_paired = Ztype[as.logical(colSums(mu))]
+    # Ztype_paired = Ztype[unlist(apply(mu, 1, function(x) which(x>0)))] 
+    # 
+    # # Xtype_single = table(Xtype[!rowSums(mu)])
+    # # Ztype_single = table(Ztype[!colSums(mu)])
+    # Xtype_single = table(factor(Xtype[!rowSums(mu)], 1:nrow(Xu))) # account for missing types
+    # Ztype_single = table(factor(Ztype[!colSums(mu)], 1:nrow(Zu))) # account for missing types
     
-    # Xtype_single = table(Xtype[!rowSums(mu)])
-    # Ztype_single = table(Ztype[!colSums(mu)])
-    Xtype_single = table(factor(Xtype[!rowSums(mu)], 1:nrow(Xu))) # account for missing types
-    Ztype_single = table(factor(Ztype[!colSums(mu)], 1:nrow(Zu))) # account for missing types
-    
-    pmfW=table(Xtype)/nrow(mu)
-    pmfM=table(Ztype)/ncol(mu)
+    # pmfW=table(Xtype)/nrow(mu)
+    # pmfM=table(Ztype)/ncol(mu)
+    pmfW = wtd.table(Xtype, weights=X_w)
+    pmfW = pmfW/sum(pmfW)
+    pmfM = wtd.table(Ztype, weights=Z_w)
+    pmfM = pmfM/sum(pmfM)
     
     num_Xu = nrow(Xu)
     num_Zu = nrow(Zu)
@@ -136,12 +141,13 @@ fitrpm_R_CP <- function(formula, mu, Xdata, Zdata, theta_0=NULL, choices, contro
     # match_w = lapply(match_w, function(x){c(x,rep((num_Zu+1), choices-length(x)))})
     # w_table = table(rep(Xtype, each=choices), unlist(match_w))
     match_w = unlist(match_w)
-    df = data.frame(type = Xtype, m_type=match_w, freq=mu@x)
-    df.exp = df[rep(row.names(df), df$freq), 1:3]
-    dfs = data.frame(type = Xtype, m_type=rep(num_Zu+1, length(Xtype)), freq=choices - mu@x)
+    df = data.frame(type = Xtype, m_type=match_w, freq=mu@x, weight=pair_w)
+    df.exp = df[rep(row.names(df), df$freq), 1:4]
+    dfs = data.frame(type = Xtype, m_type=rep(num_Zu+1, length(Xtype)), freq=choices - mu@x, weight=pair_w)
     dfs = dfs[dfs$freq>0,]
-    dfs.exp = dfs[rep(row.names(dfs), dfs$freq), 1:3]
-    w_table = table(c(df.exp$type, dfs.exp$type), c(df.exp$m_type, dfs.exp$m_type))
+    dfs.exp = dfs[rep(row.names(dfs), dfs$freq), 1:4]
+    # w_table = table(c(df.exp$type, dfs.exp$type), c(df.exp$m_type, dfs.exp$m_type))
+    w_table = wtd.table(c(df.exp$type, dfs.exp$type), c(df.exp$m_type, dfs.exp$m_type), weights=c(df.exp$weight, dfs.exp$weight))
     
     w_table = rbind(w_table, 0)
     
@@ -151,12 +157,13 @@ fitrpm_R_CP <- function(formula, mu, Xdata, Zdata, theta_0=NULL, choices, contro
     # match_m = lapply(match_m, function(x){c(x,rep((num_Xu+1), choices-length(x)))})
     # m_table = table(rep(Ztype, each=choices), unlist(match_m))
     match_m = unlist(match_m)
-    df = data.frame(type = Ztype, m_type=match_m, freq=mu@x)
-    df.exp = df[rep(row.names(df), df$freq), 1:3]
-    dfs = data.frame(type = Ztype, m_type=rep(num_Xu+1, length(Ztype)), freq=choices - mu@x)
+    df = data.frame(type = Ztype, m_type=match_m, freq=mu@x, weight=pair_w)
+    df.exp = df[rep(row.names(df), df$freq), 1:4]
+    dfs = data.frame(type = Ztype, m_type=rep(num_Xu+1, length(Ztype)), freq=choices - mu@x, weight=pair_w)
     dfs = dfs[dfs$freq>0,]
-    dfs.exp = dfs[rep(row.names(dfs), dfs$freq), 1:3]
-    m_table = table(c(df.exp$type, dfs.exp$type), c(df.exp$m_type, dfs.exp$m_type))
+    dfs.exp = dfs[rep(row.names(dfs), dfs$freq), 1:4]
+    # m_table = table(c(df.exp$type, dfs.exp$type), c(df.exp$m_type, dfs.exp$m_type))
+    m_table = wtd.table(c(df.exp$type, dfs.exp$type), c(df.exp$m_type, dfs.exp$m_type), weights=c(df.exp$weight, dfs.exp$weight))
     
     m_table = rbind(m_table, 0)
     

@@ -1,0 +1,73 @@
+> source("unpartnered_partnered_3.R")
+[1] "# females = 1435, # males = 1435"
+start: 10468.46 sec elapsed
+eq values:
+[1]  8.062733e-08  1.360988e-07  1.845348e-07  1.844950e-07  7.044980e-08  9.086182e-08  2.880711e-07  5.160291e-07 -7.075589e-09
+        b1.intercept   b1homophily.tage_t b1greaterthan.tage_t b1smallerthan.tage_t         b2.intercept   b2homophily.tage_t b2greaterthan.tage_t 
+                0.56                 0.62                 0.47                -0.53                 0.56                 0.62                -0.53 
+b2smallerthan.tage_t         ExpUtil.b1.1         ExpUtil.b1.2         ExpUtil.b1.3         ExpUtil.b1.4         ExpUtil.b2.1         ExpUtil.b2.2 
+                0.47                 3.58                 2.36                 1.16                 0.70                 1.52                 2.58 
+        ExpUtil.b2.3         ExpUtil.b2.4              delta_w              delta_m 
+                3.74                 4.16                 2.32                 2.10 
+[1] "coeff:"
+        b1.intercept   b1homophily.tage_t b1greaterthan.tage_t b1smallerthan.tage_t         b2.intercept   b2homophily.tage_t b2greaterthan.tage_t 
+           0.5628344            0.6199061            0.4732078           -0.5302803            0.5628345            0.6199073           -0.5302802 
+b2smallerthan.tage_t         ExpUtil.b1.1         ExpUtil.b1.2         ExpUtil.b1.3         ExpUtil.b1.4         ExpUtil.b2.1         ExpUtil.b2.2 
+           0.4732075            3.5825758            2.3625622            1.1605448            0.7011969            1.5227654            2.5791095 
+        ExpUtil.b2.3         ExpUtil.b2.4              delta_w              delta_m 
+           3.7448208            4.1606367            2.3215603            2.0964312 
+[1] "equality:"
+[1]  8.062733e-08  1.360988e-07  1.845348e-07  1.844950e-07  7.044980e-08  9.086182e-08  2.880711e-07  5.160291e-07 -7.075589e-09
+[1] "Likelihood ratio:"
+[1] -0.9439747
+[1] "Standard error:"
+ [1] 2.527725e-12 2.838112e-12 2.530934e-12 1.011212e-12 2.796151e-12 2.261711e-12 8.204286e-13 3.322286e-12 1.121998e-01 7.894801e-02 5.270815e-02
+[12] 5.661429e-02 5.914734e-02 8.223977e-02 1.561764e-01 2.276399e-01 6.135702e-02 6.154241e-02
+[1] "Standard error (centered:"
+ [1] 3.454611e-12 3.940301e-12 3.643601e-12 1.086993e-12 3.355213e-12 3.245771e-12 8.464542e-13 3.338770e-12 1.623774e-01 1.109345e-01 6.561031e-02
+[12] 6.157751e-02 7.820810e-02 1.185027e-01 1.988019e-01 2.654038e-01 6.354669e-02 6.373869e-02
+
+
+|                     | out.solution|
+|:--------------------|------------:|
+|b1.intercept         |    0.5628344|
+|b1homophily.tage_t   |    0.6199061|
+|b1greaterthan.tage_t |    0.4732078|
+|b1smallerthan.tage_t |   -0.5302803|
+|b2.intercept         |    0.5628345|
+|b2homophily.tage_t   |    0.6199073|
+|b2greaterthan.tage_t |   -0.5302802|
+|b2smallerthan.tage_t |    0.4732075|
+|ExpUtil.b1.1         |    3.5825758|
+|ExpUtil.b1.2         |    2.3625622|
+|ExpUtil.b1.3         |    1.1605448|
+|ExpUtil.b1.4         |    0.7011969|
+|ExpUtil.b2.1         |    1.5227654|
+|ExpUtil.b2.2         |    2.5791095|
+|ExpUtil.b2.3         |    3.7448208|
+|ExpUtil.b2.4         |    4.1606367|
+|delta_w              |    2.3215603|
+|delta_m              |    2.0964312|
+[1] "bootstrap standard error:"
+        b1.intercept   b1homophily.tage_t b1greaterthan.tage_t b1smallerthan.tage_t         b2.intercept   b2homophily.tage_t b2greaterthan.tage_t 
+           0.8971957            0.2311506            0.7892484            0.8566491            2.8550030            1.8851605            1.1939453 
+b2smallerthan.tage_t         ExpUtil.b1.1         ExpUtil.b1.2         ExpUtil.b1.3         ExpUtil.b1.4         ExpUtil.b2.1         ExpUtil.b2.2 
+           1.2242821            1.6009161            1.1862954            1.4755623            2.5418178            2.1713026            1.1497208 
+        ExpUtil.b2.3         ExpUtil.b2.4              delta_w              delta_m 
+           1.5430844            1.7533006            0.4934363            0.6846610 
+[1] "estimated joint probabilities"
+           [,1]        [,2]        [,3]        [,4]        [,5]
+[1,] 0.18514481 0.116661601 0.046401652 0.024171517 0.005099407
+[2,] 0.02492418 0.210134840 0.062327886 0.032467801 0.006849653
+[3,] 0.02876155 0.024302435 0.096448397 0.037466603 0.007904239
+[4,] 0.01587488 0.013413683 0.005335235 0.027730884 0.004362729
+[5,] 0.01027795 0.008684488 0.003454218 0.001799369 0.000000000
+[1] "observed joint probabilities"
+             1           2           3           4           5
+1 0.1956445993 0.150871080 0.011498258 0.001916376 0.011324042
+2 0.0559233449 0.179094077 0.075958188 0.018118467 0.007229965
+3 0.0073170732 0.031010453 0.100696864 0.055052265 0.004355401
+4 0.0005226481 0.001916376 0.020209059 0.045818815 0.001306620
+  0.0079268293 0.009494774 0.004529617 0.002264808 0.000000000
+start: 10468.46 sec elapsed
+There were 12 warnings (use warnings() to see them)
