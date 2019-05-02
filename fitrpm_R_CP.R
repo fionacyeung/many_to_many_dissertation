@@ -134,6 +134,8 @@ fitrpm_R_CP <- function(formula, mu, Xdata, Zdata, X_w, Z_w, pair_w, theta_0=NUL
     num_Zu = nrow(Zu)
 
     ########## modified to work with many-t0-many ###########
+    # this may be depend on the application
+    # the code below assumes mu is a diagonal matrix and there are no singles
     ####### only works for "INDIV" for now #############
     match_w = apply(mu, 1, function(x) which(x>=1))
     match_w = lapply(match_w, function(x){Ztype[x, drop=FALSE]})
@@ -337,9 +339,6 @@ fitrpm_R_CP <- function(formula, mu, Xdata, Zdata, X_w, Z_w, pair_w, theta_0=NUL
         if(!is.null(names(theta_0))){names(th_hat) <- names(theta_0)}
         out$loglik <- -K*out$objective
         out$exitflag <- out$status
-        cat("eq values:\n")
-        print((eqfun(out$solution, X, Z, NumGammaW, NumGammaM, pmfW, pmfM, pmfj, gw, gm, n, symmetric, sampling, choices)))
-        print(round(th_hat,2))
         
     }else{
         out <- solnp(pars=theta_0, fun=loglikfun, eqfun=eqfun,
@@ -357,13 +356,15 @@ fitrpm_R_CP <- function(formula, mu, Xdata, Zdata, X_w, Z_w, pair_w, theta_0=NUL
         if(!is.null(names(theta_0))){names(th_hat) <- names(theta_0)}
         out$loglik <- -K*out$values[length(out$values)]
         out$exitflag <- out$converged
-        cat("eq values:\n")
-        print((eqfun(out$solution, X, Z, NumGammaW, NumGammaM, pmfW, pmfM, pmfj, gw, gm, n, symmetric, sampling, choices)))
-        print(round(th_hat,2))
-        
+      
     }
-
+    
+    print(round(th_hat,2))
+    
     out$eq = eqfun(out$solution, X, Z, NumGammaW, NumGammaM, pmfW, pmfM, pmfj, gw, gm, n, symmetric, sampling, choices)
+    cat("eq values:\n")
+    print(out$eq)
+  
     out$coef <- th_hat[1:NumBeta]
     out$rPMFW <- 1/ (1+th_hat[(NumBeta+1):(NumBeta+NumGammaW)])
     out$rPMFM <- 1/ (1+th_hat[(NumBeta+NumGammaW+1):(NumBeta+NumGammaW+NumGammaM)])
@@ -386,26 +387,28 @@ fitrpm_R_CP <- function(formula, mu, Xdata, Zdata, X_w, Z_w, pair_w, theta_0=NUL
                   pmfW=pmfW, pmfM=pmfM, pmfj=pmfj, gw=gw, gm=gm, n=n, symmetric=symmetric, sampling=sampling,
                   choices=choices, opts=control)
     
-    out$loglik.null <- -K*out.null$objective
-    #       out$loglik <- out$loglik - out$loglik.null + K*loglik.ref
-    #       out$loglik.null <- K*loglik.ref
-    out$loglik.null2 <- -K*loglikelihood_CP(rep(0, NumBeta),
-                                     GammaW=out.null$solution[1:NumGammaW], 
-                                     GammaM=out.null$solution[NumGammaW+(1:NumGammaM)],
-                                     delta_w = out.null$solution[NumGamma+1],
-                                     delta_m = out.null$solution[NumGamma+2],
-                                     Xd=X, Zd=Z, 
-                                     pmfW=pmfW, pmfM=pmfM, pmfj=pmfj, gw=gw, gm=gm, n=n, symmetric=symmetric, sampling=sampling, choices=choices)
+    # out$loglik.null <- -K*out.null$objective
+    # #       out$loglik <- out$loglik - out$loglik.null + K*loglik.ref
+    # #       out$loglik.null <- K*loglik.ref
+    # out$loglik.null2 <- -K*loglikelihood_CP(rep(0, NumBeta),
+    #                                  GammaW=out.null$solution[1:NumGammaW], 
+    #                                  GammaM=out.null$solution[NumGammaW+(1:NumGammaM)],
+    #                                  delta_w = out.null$solution[NumGamma+1],
+    #                                  delta_m = out.null$solution[NumGamma+2],
+    #                                  Xd=X, Zd=Z, 
+    #                                  pmfW=pmfW, pmfM=pmfM, pmfj=pmfj, gw=gw, gm=gm, n=n, symmetric=symmetric, sampling=sampling, choices=choices)
    
     out$null_solution = out.null$solution     
     out$pmfj=pmfj; out$pmfW=pmfW; out$pmfM=pmfM
     out$Xd=X; out$Zd=Z
     
     # chi-squared test
-    matching_freq = check_CP_latent(formula, out$solution, mu, Xdata, Zdata, symmetric, choices)
-    matching_freq_null = check_CP_latent(formula, c(rep(0, NumBeta), out$null_solution), mu, Xdata, Zdata, symmetric, choices)
+    matching_freq = check_CP_latent(formula, out$solution, mu, Xdata, Zdata, X_w, Z_w, pair_w, symmetric, choices)
+    matching_freq_null = check_CP_latent(formula, c(rep(0, NumBeta), out$null_solution), mu, Xdata, Zdata, X_w, Z_w, pair_w, symmetric, choices)
+    
     ct = chisq.test(x=matrix(matching_freq$pmfj_est * n,nrow=1)[-(num_Zu+1)*(num_Xu+1)],
-               p=matrix(matching_freq_null$pmfj_est,nrow=1)[-(num_Zu+1)*(num_Xu+1)], rescale.p = T)
+               p=matrix(matching_freq_null$pmfj_est * n,nrow=1)[-(num_Zu+1)*(num_Xu+1)], rescale.p = T)
+    
     out$chisq_stat = ct$statistic
     out$p.value = ct$p.value
                                                 
@@ -428,23 +431,6 @@ fitrpm_R_CP <- function(formula, mu, Xdata, Zdata, X_w, Z_w, pair_w, theta_0=NUL
       out$outer_grad = outer_grad
       out$outer_grad_2 = outer_grad_2
       out$hess_CP = hess_CP
-        
-      # browser()
-      # dimnames(H) <- list(names(th_hat[1:NumBeta]),names(th_hat[1:NumBeta]))
-      # dimnames(Geqfun) <- list(c(names(th_hat)[(NumBeta+1):(NumBeta+NumGamma)],"delta"),names(th_hat[1:NumBeta]))
-      # Hi <- try(ginv(-H))
-      # if(inherits(Hi,"try-error")){
-      #   Hi <- -diag(1/diag(H))
-      # }
-      # V <- try(Hi - Hi %*% t(Geqfun) %*% ginv(Geqfun %*% Hi %*% t(Geqfun))%*% Geqfun %*% Hi)
-      # if(inherits(V,"try-error")){
-      #   V <- Hi
-      # }
-      # if(all(is.na(diag(V)) | abs(diag(V))<1e-8)){
-      #   out$covar <- Hi
-      # }else{
-      #   out$covar <- V
-      # }
     }else{
       out$covar <- diag(rep(NA,length(th_hat)))
     }

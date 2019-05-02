@@ -116,8 +116,8 @@ process_data = function(data, complete_cases_only, wave_num, max_choices) {
   pair_w_idx = apply(cbind(females$epppnum, males$epppnum), 1, which.min)
   pair_w = cbind(females$wpfinwgt_t, males$wpfinwgt_t)
   pair_w = pair_w[cbind(1:length(pair_w_idx),pair_w_idx)]
-  pair_min_epppnum = apply(cbind(females$epppnum, males$epppnum), 1, min)
   # sanity check
+  pair_min_epppnum = apply(cbind(females$epppnum, males$epppnum), 1, min)
   all(pair_min_epppnum < 200)
   
   Xdata = females
@@ -355,8 +355,8 @@ registerDoSNOW(cl)
 # out$solution, out$eq, w_ave_choices, m_ave_choices, out$null_solution, out$chisq_stat, out$p.value, out$covar2
 # bootstrap_result <- matrix(0,ncol=(numBeta+2+numGamma)+(numGamma+1)+2+(numGamma+2)+2+(numBeta+numGamma+2),nrow=B) 
 
-B = 1000
-# B = 3
+# B = 1000
+B = 3
 
 bootstrap_result <-
  foreach (b=1:B, .combine = 'rbind', .packages=c('nloptr','abind', 'Matrix', 'numDeriv', 'MASS', 'questionr')) %dopar% {
@@ -398,16 +398,17 @@ print("coeff:")
 print(out$solution)
 print("equality:")
 print(out$eq)
-print("Likelihood ratio:")
-print(as.numeric(out$loglik/out$loglik.null))
+# print("Likelihood ratio:")
+# print(as.numeric(out$loglik/out$loglik.null))
+print("chi-squared test statistic:")
+print(out$chisq_stat) 
+print("chi-squared test p-value:")
+print(out$p.value)
 print("Standard error:")
 print(sqrt(out$covar))
 print("Standard error (centered:")
 print(sqrt(out$covar2))
 
-# output table
-dff = data.frame(out$solution)
-print(kable(dff))
 
 # compute variance and standard error of the estimates
 diff_est = bootstrap_result[,1:length(out$solution)] - matrix(rep(out$solution, times=B), nrow=B, byrow=T)
@@ -418,17 +419,20 @@ for (b in 1:B) {
 asympt_var = asympt_var/B
 se = sqrt(diag(asympt_var))
 
-save.image(file=paste0("SE_B", B, ".RData"))
-print("bootstrap standard error:")
-print(se)
+# output table
+print("estimates and bootstrap standard error:")
+dff = data.frame(cbind(out$solution, se, sqrt(out$covar2)))
+print(kable(dff, col.names = c("estimates", "bootstrap SE", "asympt. SE")))
+
 
 # compare estimated joint probabilities with truth
-pmfj = check_CP_latent(ff, out$solution, mu, Xdata, Zdata, symmetric, max_choices)
+pmfj = check_CP_latent(ff, out$solution, mu, Xdata, Zdata, X_w, Z_w, pair_w, symmetric, max_choices)
 print("estimated joint probabilities")
 print(pmfj$pmfj_est)
 print("observed joint probabilities")
 print(pmfj$pmfj_obs)
 
+save.image(file=paste0("SE_B", B, ".RData"))
 
 log.txt <- tic.log(format = TRUE)
 log.lst <- tic.log(format = FALSE)
