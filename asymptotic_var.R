@@ -163,3 +163,28 @@ ave_hessian_CP = function(theta, NumBeta, NumGammaW, NumGammaM, Xd, Zd, pmfW, pm
   return (ave_hess)
   
 }
+
+asympt_var = function(theta, NumBeta, NumGammaW, NumGammaM, Xd, Zd, pmfW, pmfM, pmfj, gw, gm, n, symmetric, sampling, loglikfun) {
+  
+  # # not centered
+  # outer_grad = outer_prod_gradient_CP(theta = theta, NumBeta=NumBeta, NumGammaW=NumGammaW, NumGammaM=NumGammaM,
+  #                                     Xd=Xd,Zd=Zd,pmfW=pmfW, pmfM=pmfM,pmfj=pmfj, gw=gw, gm=gm, n=n, symmetric=symmetric)
+  
+  # centered
+  outer_grad_2 = outer_prod_gradient_CP_2(theta = theta, loglikfun=loglikfun, NumBeta=NumBeta, NumGammaW=NumGammaW, NumGammaM=NumGammaM,
+                                          Xd=Xd,Zd=Zd,pmfW=pmfW, pmfM=pmfM,pmfj=pmfj, gw=gw, gm=gm, n=n, symmetric=symmetric, sampling=sampling)
+  
+  hess_CP = ave_hessian_CP(theta = theta, NumBeta=NumBeta, NumGammaW=NumGammaW, NumGammaM=NumGammaM,
+                           Xd=Xd,Zd=Zd,pmfW=pmfW, pmfM=pmfM,pmfj=pmfj, gw=gw, gm=gm, n=n, symmetric=symmetric)
+  
+  if (any(is.na(hess_CP)) || any(is.na(outer_grad_2))) {
+    # covar2 = rep(NA, NumBeta+NumGammaW+NumGammaM+2)
+    covar2 <- diag(rep(NA,length(th_hat)))
+  } else {
+    # covar = diag(ginv(hess_CP) %*% outer_grad %*% ginv(hess_CP)/n)
+    covar2 = diag(ginv(hess_CP) %*% outer_grad_2 %*% ginv(hess_CP)/n)
+  }
+  
+  # return(list(covar=covar, covar2=covar2, outer_grad=outer_grad, outer_grad_2=outer_grad_2, hess_CP=hess_CP))
+  return(list(covar2=covar2, outer_grad_2=outer_grad_2, hess_CP=hess_CP))
+}

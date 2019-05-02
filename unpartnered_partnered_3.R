@@ -355,8 +355,8 @@ registerDoSNOW(cl)
 # out$solution, out$eq, w_ave_choices, m_ave_choices, out$null_solution, out$chisq_stat, out$p.value, out$covar2
 # bootstrap_result <- matrix(0,ncol=(numBeta+2+numGamma)+(numGamma+1)+2+(numGamma+2)+2+(numBeta+numGamma+2),nrow=B) 
 
-# B = 1000
-B = 3
+B = 1000
+# B = 3
 
 bootstrap_result <-
  foreach (b=1:B, .combine = 'rbind', .packages=c('nloptr','abind', 'Matrix', 'numDeriv', 'MASS', 'questionr')) %dopar% {

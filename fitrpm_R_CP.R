@@ -414,25 +414,36 @@ fitrpm_R_CP <- function(formula, mu, Xdata, Zdata, X_w, Z_w, pair_w, theta_0=NUL
                                                 
     if(control[["hessian"]]){
 
-      # not centered
-      outer_grad = outer_prod_gradient_CP(theta = th_hat, NumBeta=NumBeta, NumGammaW=NumGammaW, NumGammaM=NumGammaM,
-                                          Xd=X,Zd=Z,pmfW=pmfW, pmfM=pmfM,pmfj=pmfj, gw=gw, gm=gm, n=n, symmetric=symmetric)
+      # # not centered
+      # outer_grad = outer_prod_gradient_CP(theta = th_hat, NumBeta=NumBeta, NumGammaW=NumGammaW, NumGammaM=NumGammaM,
+      #                                     Xd=X,Zd=Z,pmfW=pmfW, pmfM=pmfM,pmfj=pmfj, gw=gw, gm=gm, n=n, symmetric=symmetric)
+      # 
+      # # centered
+      # outer_grad_2 = outer_prod_gradient_CP_2(theta = th_hat, loglikfun=loglikfun, NumBeta=NumBeta, NumGammaW=NumGammaW, NumGammaM=NumGammaM,
+      #                                     Xd=X,Zd=Z,pmfW=pmfW, pmfM=pmfM,pmfj=pmfj, gw=gw, gm=gm, n=n, symmetric=symmetric, sampling=sampling)
+      # 
+      # hess_CP = ave_hessian_CP(theta = th_hat, NumBeta=NumBeta, NumGammaW=NumGammaW, NumGammaM=NumGammaM,
+      #                          Xd=X,Zd=Z,pmfW=pmfW, pmfM=pmfM,pmfj=pmfj, gw=gw, gm=gm, n=n, symmetric=symmetric)
+      # 
+      # out$covar = diag(ginv(hess_CP) %*% outer_grad %*% ginv(hess_CP)/n)
+      # out$covar2 = diag(ginv(hess_CP) %*% outer_grad_2 %*% ginv(hess_CP)/n)
+      # 
+      # out$outer_grad = outer_grad
+      # out$outer_grad_2 = outer_grad_2
+      # out$hess_CP = hess_CP
       
-      # centered
-      outer_grad_2 = outer_prod_gradient_CP_2(theta = th_hat, loglikfun=loglikfun, NumBeta=NumBeta, NumGammaW=NumGammaW, NumGammaM=NumGammaM,
-                                          Xd=X,Zd=Z,pmfW=pmfW, pmfM=pmfM,pmfj=pmfj, gw=gw, gm=gm, n=n, symmetric=symmetric, sampling=sampling)
+      asym_var_out = asympt_var(theta=th_hat, NumBeta=NumBeta, NumGammaW=NumGammaW, NumGammaM=NumGammaM, 
+                                Xd=X,Zd=Z,pmfW=pmfW, pmfM=pmfM,pmfj=pmfj, gw=gw, gm=gm, n=n, 
+                                symmetric=symmetric, sampling=sampling, loglikfun=loglikfun)
       
-      hess_CP = ave_hessian_CP(theta = th_hat, NumBeta=NumBeta, NumGammaW=NumGammaW, NumGammaM=NumGammaM,
-                               Xd=X,Zd=Z,pmfW=pmfW, pmfM=pmfM,pmfj=pmfj, gw=gw, gm=gm, n=n, symmetric=symmetric)
+      # out$covar = asym_var_out$covar
+      out$covar2 = asym_var_out$covar2
+      # out$outer_grad = asym_var_out$outer_grad
+      # out$outer_grad_2 = asym_var_out$outer_grad_2
+      # out$hess_CP = asym_var_out$hess_CP
       
-      out$covar = diag(ginv(hess_CP) %*% outer_grad %*% ginv(hess_CP)/n)
-      out$covar2 = diag(ginv(hess_CP) %*% outer_grad_2 %*% ginv(hess_CP)/n)
-      
-      out$outer_grad = outer_grad
-      out$outer_grad_2 = outer_grad_2
-      out$hess_CP = hess_CP
     }else{
-      out$covar <- diag(rep(NA,length(th_hat)))
+      out$covar2 <- diag(rep(NA,length(th_hat)))
     }
     
     out$control <- control
