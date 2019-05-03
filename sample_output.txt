@@ -1,103 +1,75 @@
 > source("unpartnered_partnered_3.R")
-[1] "# females = 1953, # males = 1953"
+[1] "# females = 1435, # males = 1435"
+start: 9938.08 sec elapsed
+             b1.intercept b1nodematch.educlevel_t.1 b1nodematch.educlevel_t.2 b1nodematch.educlevel_t.3 b1nodematch.educlevel_t.4              b2.intercept 
+                     1.01                      0.93                      0.34                      0.12                      0.94                      1.01 
+b2nodematch.educlevel_t.1 b2nodematch.educlevel_t.2 b2nodematch.educlevel_t.3 b2nodematch.educlevel_t.4              ExpUtil.b1.1              ExpUtil.b1.2 
+                     0.93                      0.34                      0.12                      0.94                      2.88                      2.34 
+             ExpUtil.b1.3              ExpUtil.b1.4              ExpUtil.b2.1              ExpUtil.b2.2              ExpUtil.b2.3              ExpUtil.b2.4 
+                     1.94                      3.31                      4.35                      3.72                      3.29                      6.49 
+                  delta_w                   delta_m 
+                     2.19                      1.67 
 eq values:
-[1]  3.110842e-07  5.600023e-07  5.409067e-07  3.083856e-07  3.216951e-07  4.335426e-07  6.191193e-07  3.426623e-07 -2.373462e-08
-             b1.intercept b1nodematch.educlevel_t.1 b1nodematch.educlevel_t.2 b1nodematch.educlevel_t.3 b1nodematch.educlevel_t.4 
-                     0.88                      1.05                      0.35                      0.08                      1.02 
-             b2.intercept b2nodematch.educlevel_t.1 b2nodematch.educlevel_t.2 b2nodematch.educlevel_t.3 b2nodematch.educlevel_t.4 
-                     0.88                      1.05                      0.35                      0.08                      1.02 
-             ExpUtil.b1.1              ExpUtil.b1.2              ExpUtil.b1.3              ExpUtil.b1.4              ExpUtil.b2.1 
-                     3.50                      2.77                      2.15                      3.98                      3.17 
-             ExpUtil.b2.2              ExpUtil.b2.3              ExpUtil.b2.4                   delta_w                   delta_m 
-                     2.54                      2.12                      4.49                      1.94                      1.96 
-start: 19 sec elapsed
-[1] "Coeff:"
-             b1.intercept b1nodematch.educlevel_t.1 b1nodematch.educlevel_t.2 b1nodematch.educlevel_t.3 b1nodematch.educlevel_t.4 
-               0.87645029                1.05225661                0.35469790                0.07839335                1.02208081 
-             b2.intercept b2nodematch.educlevel_t.1 b2nodematch.educlevel_t.2 b2nodematch.educlevel_t.3 b2nodematch.educlevel_t.4 
-               0.87645026                1.05225661                0.35469794                0.07839336                1.02208081 
-             ExpUtil.b1.1              ExpUtil.b1.2              ExpUtil.b1.3              ExpUtil.b1.4              ExpUtil.b2.1 
-               3.50371919                2.77078329                2.15111733                3.97680963                3.16728660 
-             ExpUtil.b2.2              ExpUtil.b2.3              ExpUtil.b2.4                   delta_w                   delta_m 
-               2.53637590                2.12062593                4.49250856                1.94096345                1.96414666 
+[1]  3.630948e-06  9.203443e-06  7.076867e-06  8.833387e-06  5.945830e-06  5.739839e-06  5.803116e-06  1.774692e-05 -3.460978e-07
+[1] "coeff:"
+             b1.intercept b1nodematch.educlevel_t.1 b1nodematch.educlevel_t.2 b1nodematch.educlevel_t.3 b1nodematch.educlevel_t.4              b2.intercept 
+                1.0062754                 0.9278952                 0.3360769                 0.1172738                 0.9442735                 1.0062787 
+b2nodematch.educlevel_t.1 b2nodematch.educlevel_t.2 b2nodematch.educlevel_t.3 b2nodematch.educlevel_t.4              ExpUtil.b1.1              ExpUtil.b1.2 
+                0.9278952                 0.3360722                 0.1172740                 0.9442724                 2.8785713                 2.3384676 
+             ExpUtil.b1.3              ExpUtil.b1.4              ExpUtil.b2.1              ExpUtil.b2.2              ExpUtil.b2.3              ExpUtil.b2.4 
+                1.9375194                 3.3058524                 4.3520532                 3.7195728                 3.2931986                 6.4886184 
+                  delta_w                   delta_m 
+                2.1936345                 1.6746644 
 [1] "equality:"
-[1]  3.110842e-07  5.600023e-07  5.409067e-07  3.083856e-07  3.216951e-07  4.335426e-07  6.191193e-07  3.426623e-07 -2.373462e-08
-[1] "Likelihood ratio:"
-[1] -0.9559105
+[1]  3.630948e-06  9.203443e-06  7.076867e-06  8.833387e-06  5.945830e-06  5.739839e-06  5.803116e-06  1.774692e-05 -3.460978e-07
+[1] "chi-squared test statistic:"
+X-squared 
+  942.076 
+[1] "chi-squared test p-value:"
+[1] 2.704801e-184
 [1] "Standard error:"
- [1] 8.750782e-12 2.257071e-12 1.283134e-12 1.556255e-12 1.051181e-12 3.870519e-12 1.143910e-12 9.260809e-13 2.929274e-12 4.869666e-13
-[11] 1.827046e-01 8.951300e-02 6.251769e-02 1.283280e-01 1.555654e-01 7.426369e-02 6.562218e-02 1.544322e-01 5.240851e-02 5.241447e-02
+ [1] 6.268286e-12 1.230124e-12 3.376175e-12 9.654810e-12 6.567243e-13 3.166768e-12 1.146087e-12 3.306378e-12 8.351876e-12 1.405245e-12 1.978711e-01
+[12] 1.188199e-01 9.160622e-02 1.623969e-01 2.824706e-01 1.798610e-01 1.605127e-01 3.287951e-01 6.635216e-02 6.656121e-02
 [1] "Standard error (centered:"
- [1] 9.725512e-12 2.629449e-12 1.336677e-12 2.215187e-12 1.321692e-12 4.272119e-12 1.302576e-12 9.827138e-13 2.929280e-12 6.351075e-13
-[11] 2.078215e-01 1.192079e-01 8.773441e-02 1.704283e-01 1.795591e-01 1.035660e-01 8.936666e-02 1.995637e-01 5.430141e-02 5.430758e-02
+ [1] 6.268286e-12 1.230124e-12 3.376175e-12 9.654810e-12 6.567243e-13 3.166768e-12 1.146087e-12 3.306378e-12 8.351876e-12 1.405245e-12 1.978711e-01
+[12] 1.188199e-01 9.160622e-02 1.623969e-01 2.824706e-01 1.798610e-01 1.605127e-01 3.287951e-01 6.635216e-02 6.656121e-02
+[1] "estimates and bootstrap standard error:"
 
 
-|                          | out.solution|
-|:-------------------------|------------:|
-|b1.intercept              |    0.8764503|
-|b1nodematch.educlevel_t.1 |    1.0522566|
-|b1nodematch.educlevel_t.2 |    0.3546979|
-|b1nodematch.educlevel_t.3 |    0.0783934|
-|b1nodematch.educlevel_t.4 |    1.0220808|
-|b2.intercept              |    0.8764503|
-|b2nodematch.educlevel_t.1 |    1.0522566|
-|b2nodematch.educlevel_t.2 |    0.3546979|
-|b2nodematch.educlevel_t.3 |    0.0783934|
-|b2nodematch.educlevel_t.4 |    1.0220808|
-|ExpUtil.b1.1              |    3.5037192|
-|ExpUtil.b1.2              |    2.7707833|
-|ExpUtil.b1.3              |    2.1511173|
-|ExpUtil.b1.4              |    3.9768096|
-|ExpUtil.b2.1              |    3.1672866|
-|ExpUtil.b2.2              |    2.5363759|
-|ExpUtil.b2.3              |    2.1206259|
-|ExpUtil.b2.4              |    4.4925086|
-|delta_w                   |    1.9409635|
-|delta_m                   |    1.9641467|
+|                          | estimates| bootstrap SE| asympt. SE|
+|:-------------------------|---------:|------------:|----------:|
+|b1.intercept              | 1.0062754|    0.1700947|  0.0000000|
+|b1nodematch.educlevel_t.1 | 0.9278952|    0.1360293|  0.0000000|
+|b1nodematch.educlevel_t.2 | 0.3360769|    0.1154289|  0.0000000|
+|b1nodematch.educlevel_t.3 | 0.1172738|    0.1252819|  0.0000000|
+|b1nodematch.educlevel_t.4 | 0.9442735|    0.1107680|  0.0000000|
+|b2.intercept              | 1.0062787|    0.1700962|  0.0000000|
+|b2nodematch.educlevel_t.1 | 0.9278952|    0.1360294|  0.0000000|
+|b2nodematch.educlevel_t.2 | 0.3360722|    0.1154321|  0.0000000|
+|b2nodematch.educlevel_t.3 | 0.1172740|    0.1252822|  0.0000000|
+|b2nodematch.educlevel_t.4 | 0.9442724|    0.1107673|  0.0000000|
+|ExpUtil.b1.1              | 2.8785713|    1.0184005|  0.1978711|
+|ExpUtil.b1.2              | 2.3384676|    0.8991961|  0.1188199|
+|ExpUtil.b1.3              | 1.9375194|    0.4461033|  0.0916062|
+|ExpUtil.b1.4              | 3.3058524|    0.8284800|  0.1623969|
+|ExpUtil.b2.1              | 4.3520532|    1.2628772|  0.2824706|
+|ExpUtil.b2.2              | 3.7195728|    0.9995737|  0.1798610|
+|ExpUtil.b2.3              | 3.2931986|    1.1702677|  0.1605127|
+|ExpUtil.b2.4              | 6.4886184|    2.2462305|  0.3287951|
+|delta_w                   | 2.1936345|    0.2206344|  0.0663522|
+|delta_m                   | 1.6746644|    0.4070498|  0.0665612|
 [1] "estimated joint probabilities"
             [,1]        [,2]        [,3]        [,4]        [,5]
-[1,] 0.048723355 0.021002180 0.022720090 0.008389361 0.002065866
-[2,] 0.019580634 0.140740508 0.074899355 0.027656481 0.006810363
-[3,] 0.031545863 0.111544481 0.141151453 0.044556656 0.010972003
-[4,] 0.013413418 0.047429125 0.051308673 0.146311253 0.004665336
-[5,] 0.002508151 0.008868687 0.009594117 0.003542614 0.000000000
+[1,] 0.045825762 0.020866653 0.023248185 0.009523752 0.001926536
+[2,] 0.022053029 0.125800263 0.071566066 0.029317450 0.005930553
+[3,] 0.035266371 0.102721988 0.144697981 0.046883358 0.009483916
+[4,] 0.017445284 0.050813685 0.056613100 0.153292550 0.004691427
+[5,] 0.002595919 0.007561253 0.008424226 0.003451032 0.000000000
 [1] "observed joint probabilities"
-            1           2           3           4           5
-1 0.048259089 0.032130056 0.015488991 0.002432156 0.003328213
-2 0.036098310 0.140168971 0.068356375 0.017281106 0.007296467
-3 0.024577573 0.105478751 0.142601126 0.059907834 0.009088582
-4 0.003584229 0.041090630 0.067844342 0.145673323 0.004800307
-  0.002880184 0.009792627 0.007488479 0.004352279 0.000000000
-start: 19 sec elapsed
-Warning messages:
-1: In read.dta13(data_file) : 
-  wpfinwgt_t:
-  Factor codes of type double or float detected - no labels assigned.
-  Set option nonint.factors to TRUE to assign labels anyway.
-
-2: In read.dta13(data_file) : 
-  tage_t:
-  Missing factor labels - no labels assigned.
-  Set option generate.factors=T to generate labels.
-3: In read.dta13(data_file) : 
-  s_wpfinwgt_t:
-  Factor codes of type double or float detected - no labels assigned.
-  Set option nonint.factors to TRUE to assign labels anyway.
-
-4: In read.dta13(data_file) : 
-  s_tage_t:
-  Missing factor labels - no labels assigned.
-  Set option generate.factors=T to generate labels.
-5: In read.dta13(data_file) : 
-  p_wpfinwgt_t:
-  Factor codes of type double or float detected - no labels assigned.
-  Set option nonint.factors to TRUE to assign labels anyway.
-
-6: In read.dta13(data_file) : 
-  p_tage_t:
-  Missing factor labels - no labels assigned.
-  Set option generate.factors=T to generate labels.
-7: In read.dta13(data_file) : 
-  marrcohabt_rev:
-  Factor codes of type double or float detected - no labels assigned.
-  Set option nonint.factors to TRUE to assign labels anyway.
+            1           2          3           4           5
+1 0.046424696 0.030022030 0.02078043 0.002976107 0.002765861
+2 0.038216576 0.129164092 0.06149470 0.021752060 0.005289576
+3 0.030889169 0.095070295 0.13650529 0.069100532 0.009240275
+4 0.003516540 0.045142851 0.07739454 0.147485246 0.004736714
+  0.002135398 0.007675546 0.00742595 0.004795532 0.000000000
+start: 9938.08 sec elapsed
